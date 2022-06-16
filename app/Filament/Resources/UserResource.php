@@ -5,7 +5,9 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\UserResource\Pages;
 use App\Filament\Resources\UserResource\RelationManagers;
 use App\Models\User;
+use Filament\Facades\Filament;
 use Filament\Forms;
+use Filament\Forms\Components\TextInput;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
@@ -13,6 +15,8 @@ use Filament\Tables;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules\Password;
 
 class UserResource extends Resource
 {
@@ -46,6 +50,26 @@ class UserResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\Action::make('changePassword')
+                    ->form([
+                        TextInput::make('new_password')
+                            ->password()
+                            ->label('New password')
+                            ->required()
+                            ->rule(Password::default()),
+                        TextInput::make('new_password_confirmation')
+                            ->password()
+                            ->label('Confirm New password')
+                            ->required()
+                            ->same('new_password')
+                            ->rule(Password::default()),
+                    ])
+                    ->action(function (User $record, array $data) {
+                        $record->update([
+                            'password' => Hash::make($data['new_password'])
+                        ]);
+                        Filament::notify('success', 'Password updated successfully');
+                    })
             ])
             ->bulkActions([
             ]);
