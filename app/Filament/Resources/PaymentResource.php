@@ -31,7 +31,7 @@ class PaymentResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('created_at')->label('Payment time'),
+                Tables\Columns\TextColumn::make('created_at')->label('Payment time')->sortable(),
                 Tables\Columns\TextColumn::make('product.name'),
                 Tables\Columns\TextColumn::make('user.name')->label('User name'),
                 Tables\Columns\TextColumn::make('user.email')->label('User email'),
@@ -40,8 +40,20 @@ class PaymentResource extends Resource
                 Tables\Columns\TextColumn::make('taxes')->money('usd'),
                 Tables\Columns\TextColumn::make('total')->money('usd'),
             ])
+            ->defaultSort('created_at', 'desc')
             ->filters([
-                //
+                Tables\Filters\Filter::make('created_at')
+                    ->form([
+                        Forms\Components\DatePicker::make('created_from'),
+                        Forms\Components\DatePicker::make('created_until'),
+                    ])
+                    ->query(function ($query, array $data) {
+                        return $query
+                            ->when($data['created_from'],
+                                fn($query) => $query->whereDate('created_at', '>=', $data['created_from']))
+                            ->when($data['created_until'],
+                                fn($query) => $query->whereDate('created_at', '<=', $data['created_until']));
+                    })
             ]);
     }
 
