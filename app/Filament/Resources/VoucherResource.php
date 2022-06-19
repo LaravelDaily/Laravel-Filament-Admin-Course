@@ -29,7 +29,7 @@ class VoucherResource extends Resource
                     ->numeric()
                     ->default(10)
                     ->extraInputAttributes(['min' => 1, 'max' => 100, 'step' => 1]),
-                Forms\Components\BelongsToSelect::make('product_id')
+                Forms\Components\Select::make('product_id')
                     ->relationship('product', 'name')
             ]);
     }
