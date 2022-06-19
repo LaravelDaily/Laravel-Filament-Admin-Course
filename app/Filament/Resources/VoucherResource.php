@@ -19,6 +19,8 @@ class VoucherResource extends Resource
 
     protected static ?string $navigationGroup = 'Shop';
 
+    protected static ?int $navigationSort = 4;
+
     protected static ?string $recordTitleAttribute = 'code';
 
     public static function form(Form $form): Form
