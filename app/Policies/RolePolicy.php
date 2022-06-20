@@ -5,7 +5,7 @@ namespace App\Policies;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class UserPolicy
+class RolePolicy
 {
     use HandlesAuthorization;
 
@@ -17,7 +17,7 @@ class UserPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->can('view_any_user');
+        return $user->can('view_any_role');
     }
 
     /**
@@ -28,7 +28,7 @@ class UserPolicy
      */
     public function view(User $user)
     {
-        return $user->can('view_user');
+        return $user->can('view_role');
     }
 
     /**
@@ -39,7 +39,7 @@ class UserPolicy
      */
     public function create(User $user)
     {
-        return $user->can('create_user');
+        return $user->can('create_role');
     }
 
     /**
@@ -50,7 +50,7 @@ class UserPolicy
      */
     public function update(User $user)
     {
-        return $user->can('update_user');
+        return $user->can('update_role');
     }
 
     /**
@@ -61,7 +61,7 @@ class UserPolicy
      */
     public function delete(User $user)
     {
-        return $user->can('delete_user');
+        return $user->can('delete_role');
     }
 
     /**
@@ -72,7 +72,7 @@ class UserPolicy
      */
     public function deleteAny(User $user)
     {
-        return $user->can('delete_any_user');
+        return $user->can('delete_any_role');
     }
 
 }

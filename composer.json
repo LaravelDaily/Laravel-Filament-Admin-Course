@@ -7,6 +7,7 @@
     "require": {
         "php": "^8.0.2",
         "barryvdh/laravel-debugbar": "^3.6",
+        "bezhansalleh/filament-shield": "^1.1",
         "filament/filament": "^2.0",
         "flowframe/laravel-trend": "^0.1.1",
         "guzzlehttp/guzzle": "^7.2",
