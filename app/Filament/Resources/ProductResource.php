@@ -28,20 +28,21 @@ class ProductResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Section::make('Main fields')
-                    ->description('Fill in all fields')->schema([
-                    Forms\Components\TextInput::make('name')
-                        ->required()
-                        ->reactive()
-                        ->afterStateUpdated(function (\Closure $set, $state) {
-                            $set('slug', Str::slug($state));
-                        }),
-                    Forms\Components\TextInput::make('slug')->required(),
-                ]),
-                Forms\Components\Fieldset::make('Secondary fields')->schema([
-                    Forms\Components\TextInput::make('price')->required()->rule('numeric'),
-                    Forms\Components\FileUpload::make('image'),
-                ]),
+                Forms\Components\Tabs::make('Fields')->tabs([
+                    Forms\Components\Tabs\Tab::make('Main fields')->schema([
+                        Forms\Components\TextInput::make('name')
+                            ->required()
+                            ->reactive()
+                            ->afterStateUpdated(function (\Closure $set, $state) {
+                                $set('slug', Str::slug($state));
+                            }),
+                        Forms\Components\TextInput::make('slug')->required(),
+                    ]),
+                    Forms\Components\Tabs\Tab::make('Secondary fields')->schema([
+                        Forms\Components\TextInput::make('price')->required()->rule('numeric'),
+                        Forms\Components\FileUpload::make('image'),
+                    ]),
+                ])
             ]);
     }
 
