@@ -37,7 +37,7 @@ class ProductResource extends Resource
                 Forms\Components\TextInput::make('slug')->required(),
                 Forms\Components\TextInput::make('price')->required()->rule('numeric'),
                 Forms\Components\FileUpload::make('image'),
-            ]);
+            ])->columns(3);
     }
 
     public static function table(Table $table): Table
