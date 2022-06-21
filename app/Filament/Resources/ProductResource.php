@@ -28,7 +28,7 @@ class ProductResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Section::make('Main fields')->schema([
+                Forms\Components\Fieldset::make('Main fields')->schema([
                     Forms\Components\TextInput::make('name')
                         ->required()
                         ->reactive()
