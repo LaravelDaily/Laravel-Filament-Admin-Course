@@ -28,16 +28,18 @@ class ProductResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
-                    ->required()
-                    ->reactive()
-                    ->afterStateUpdated(function (\Closure $set, $state) {
-                        $set('slug', Str::slug($state));
-                    }),
-                Forms\Components\TextInput::make('slug')->required(),
+                Forms\Components\Card::make()->schema([
+                    Forms\Components\TextInput::make('name')
+                        ->required()
+                        ->reactive()
+                        ->afterStateUpdated(function (\Closure $set, $state) {
+                            $set('slug', Str::slug($state));
+                        }),
+                    Forms\Components\TextInput::make('slug')->required(),
+                ])->columns(2),
                 Forms\Components\TextInput::make('price')->required()->rule('numeric'),
                 Forms\Components\FileUpload::make('image'),
-            ])->columns(3);
+            ]);
     }
 
     public static function table(Table $table): Table
