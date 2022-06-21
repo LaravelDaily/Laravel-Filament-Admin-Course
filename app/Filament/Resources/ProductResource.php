@@ -28,8 +28,8 @@ class ProductResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Tabs::make('Fields')->tabs([
-                    Forms\Components\Tabs\Tab::make('Main fields')->schema([
+                Forms\Components\Wizard::make([
+                    Forms\Components\Wizard\Step::make('Main fields')->schema([
                         Forms\Components\TextInput::make('name')
                             ->required()
                             ->reactive()
@@ -38,7 +38,7 @@ class ProductResource extends Resource
                             }),
                         Forms\Components\TextInput::make('slug')->required(),
                     ]),
-                    Forms\Components\Tabs\Tab::make('Secondary fields')->schema([
+                    Forms\Components\Wizard\Step::make('Secondary fields')->schema([
                         Forms\Components\TextInput::make('price')->required()->rule('numeric'),
                         Forms\Components\FileUpload::make('image'),
                     ]),
