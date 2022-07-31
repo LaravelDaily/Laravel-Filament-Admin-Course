@@ -2,34 +2,13 @@
 
 namespace App\Policies;
 
+use App\Models\Product;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class ProductPolicy
 {
     use HandlesAuthorization;
-
-    /**
-     * Determine whether the user can view any models.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function viewAny(User $user)
-    {
-        return $user->can('view_any_product');
-    }
-
-    /**
-     * Determine whether the user can view the model.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function view(User $user)
-    {
-        return $user->can('view_product');
-    }
 
     /**
      * Determine whether the user can create models.
@@ -39,7 +18,7 @@ class ProductPolicy
      */
     public function create(User $user)
     {
-        return $user->can('create_product');
+        return $user->role_id == 2;
     }
 
     /**
@@ -48,9 +27,9 @@ class ProductPolicy
      * @param  \App\Models\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user)
+    public function update(User $user, Product $product)
     {
-        return $user->can('update_product');
+        return $user->role_id == 2;
     }
 
     /**
@@ -59,9 +38,9 @@ class ProductPolicy
      * @param  \App\Models\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user)
+    public function delete(User $user, Product $product)
     {
-        return $user->can('delete_product');
+        return $user->role_id == 2;
     }
 
     /**
@@ -72,7 +51,7 @@ class ProductPolicy
      */
     public function deleteAny(User $user)
     {
-        return $user->can('delete_any_product');
+        return $user->role_id == 2;
     }
 
 }
