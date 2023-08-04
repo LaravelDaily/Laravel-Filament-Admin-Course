@@ -7,9 +7,9 @@ use App\Filament\Resources\InvoiceResource\RelationManagers;
 use App\Models\Invoice;
 use App\Models\Product;
 use Filament\Forms;
-use Filament\Resources\Form;
+use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Resources\Table;
+use Filament\Tables\Table;
 use Filament\Tables;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -18,7 +18,7 @@ class InvoiceResource extends Resource
 {
     protected static ?string $model = Invoice::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     protected static ?string $navigationGroup = 'Shop';
 
@@ -30,7 +30,7 @@ class InvoiceResource extends Resource
             ->schema([
                 Forms\Components\Group::make()
                     ->schema([
-                        Forms\Components\Card::make()
+                        Forms\Components\Section::make()
                             ->schema([
                                 Forms\Components\TextInput::make('invoice_number')
                                     ->default('ABC-' . random_int(100000, 999999))
@@ -42,7 +42,7 @@ class InvoiceResource extends Resource
                                 'sm' => 2,
                             ]),
 
-                        Forms\Components\Card::make()
+                        Forms\Components\Section::make()
                             ->schema([
                                 Forms\Components\Placeholder::make('Products'),
 
@@ -54,7 +54,7 @@ class InvoiceResource extends Resource
                                             ->options(Product::query()->pluck('name', 'id'))
                                             ->required()
                                             ->reactive()
-                                            ->afterStateUpdated(function ($state, callable $set) {
+                                            ->afterStateUpdated(function ($state, \Filament\Forms\Set $set) {
                                                 $product = Product::find($state);
                                                 if ($product) {
                                                     $set('price', number_format($product->price / 100, 2));
@@ -78,8 +78,7 @@ class InvoiceResource extends Resource
                                             ->columnSpan([
                                                 'md' => 3,
                                             ]),
-                                        Forms\Components\Hidden::make('product_price')
-                                            ->disabled(),
+                                        Forms\Components\Hidden::make('product_price'),
                                     ])
                                     ->defaultItems(1)
                                     ->columns([

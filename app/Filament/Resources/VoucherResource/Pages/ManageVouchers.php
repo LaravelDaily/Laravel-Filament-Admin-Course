@@ -10,7 +10,7 @@ class ManageVouchers extends ManageRecords
 {
     protected static string $resource = VoucherResource::class;
 
-    protected function getActions(): array
+    protected function getHeaderActions(): array
     {
         return [
             Actions\CreateAction::make(),
